@@ -14,6 +14,8 @@ export class PostService {
       postData)
       .subscribe(responseData => {
         console.log(responseData);
+      }, error => {
+
       });
   }
 
