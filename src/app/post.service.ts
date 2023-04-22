@@ -18,7 +18,7 @@ export class PostService {
   }
 
   fetchPosts() {
-    this.http.get<{ [key: string]: Post }>('https://angular-request-project-default-rtdb.firebaseio.com/posts.json')
+    return this.http.get<{ [key: string]: Post }>('https://angular-request-project-default-rtdb.firebaseio.com/posts.json')
       .pipe(map(responseData => {
         const postArray: Post[] = [];
         for (const key in responseData) {
@@ -27,8 +27,10 @@ export class PostService {
           }
         }
         return postArray;
-      }))
-      .subscribe(posts => {
-      });
+      }));
+  }
+
+  deletePosts(){
+    return this.http.delete('https://angular-request-project-default-rtdb.firebaseio.com/posts.json');
   }
 }

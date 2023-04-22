@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.postService.fetchPosts();
+    this.getPosts();
   }
 
   onCreatePost(postData: Post) {
@@ -28,11 +28,22 @@ export class AppComponent implements OnInit {
 
   onFetchPosts() {
     // Send Http request
-    this.postService.fetchPosts();
+    this.getPosts();
   }
 
   onClearPosts() {
     // Send Http request
+    this.postService.deletePosts().subscribe(() => {
+        this.loadedPosts = [];
+    });
+  }
+
+  private getPosts() {
+    this.isFetchin = true;
+    this.postService.fetchPosts().subscribe(posts => {
+      this.isFetchin = false;
+      this.loadedPosts = posts;
+    });
   }
 
 }
