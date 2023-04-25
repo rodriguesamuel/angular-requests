@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Post} from "./post.model";
 import {catchError, map} from "rxjs/operators";
 import {Subject, throwError} from "rxjs";
@@ -7,6 +7,7 @@ import {Subject, throwError} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class PostService {
   error = new Subject<string>();
+
   constructor(private http: HttpClient) {
   }
 
@@ -22,7 +23,12 @@ export class PostService {
   }
 
   fetchPosts() {
-    return this.http.get<{ [key: string]: Post }>('https://angular-request-project-default-rtdb.firebaseio.com/posts.json')
+    return this.http.get<{
+      [key: string]: Post
+    }>('https://angular-request-project-default-rtdb.firebaseio.com/posts.json',
+      {
+        headers: new HttpHeaders({'Custom-Header': 'Hello'})
+      })
       .pipe(map(responseData => {
         const postArray: Post[] = [];
         for (const key in responseData) {
@@ -38,7 +44,7 @@ export class PostService {
       }));
   }
 
-  deletePosts(){
+  deletePosts() {
     return this.http.delete('https://angular-request-project-default-rtdb.firebaseio.com/posts.json');
   }
 }
