@@ -8,13 +8,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     console.log(req.url);
     const newRequest = req.clone(
       {headers: req.headers.append('Auth', 'asdf')});
-    return next.handle(newRequest).pipe(tap(event=> {
-      console.log(event);
-      if(event.type === HttpEventType.Response) {
-        console.log('response arrived');
-        console.log(event.body);
-      }
-    }));
+    return next.handle(newRequest);
   }
 
 }
