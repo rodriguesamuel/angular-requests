@@ -29,13 +29,13 @@ export class PostService {
     let searchParams = new HttpParams();
     searchParams = searchParams.append('print', 'pretty');
     searchParams = searchParams.append('custom', 'key');
-    return this.http.get<{
-      [key: string]: Post
-    }>('https://angular-request-project-default-rtdb.firebaseio.com/posts.json',
+    return this.http.get<{ [key: string]: Post}>(
+      'https://angular-request-project-default-rtdb.firebaseio.com/posts.json',
       {
         headers: new HttpHeaders({'Custom-Header': 'Hello'}),
-        params: searchParams
-      })
+        params: searchParams,
+      }
+    )
       .pipe(map(responseData => {
         const postArray: Post[] = [];
         for (const key in responseData) {
@@ -57,13 +57,13 @@ export class PostService {
         observe: 'events',
         responseType: 'text'
       }).pipe(tap(event => {
-        console.log(event);
-      if(event.type === HttpEventType.Sent){
+      console.log(event);
+      if (event.type === HttpEventType.Sent) {
         console.log(event.type);
       }
-        if(event.type === HttpEventType.Response){
-          console.log(event.body);
-        }
+      if (event.type === HttpEventType.Response) {
+        console.log(event.body);
+      }
     }));
   }
 }
