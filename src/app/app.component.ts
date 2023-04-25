@@ -53,9 +53,13 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isFetchin = false;
       this.loadedPosts = posts;
     }, error => {
+      this.isFetchin = false;
       this.error = error.message;
       console.log(error);
     });
   }
 
+  onHandleError() {
+    this.error = null;
+  }
 }
